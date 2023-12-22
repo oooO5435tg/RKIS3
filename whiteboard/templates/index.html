@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if post_list   %}
+        {% for post in post_list %}
+            <ul>
+                <a href="{% url 'post'  post.id%}" > Пост : {{ post.id }} </a>
+                <li> {{ post.text }}</li>
+                {%if post.pict%}
+                <li> {{ post.pict}}</li>
+                {% endif%}
+                <li> {{ post.user.get_username}}</li>
+
+            </ul>
+        {% endfor %}
+    {% else %}
+        <h1> Постов пока нет </h1>
+    {% endif%}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<li> {{ user_p.username}} </li>
+ {%if user_p.avatar%}
+
+<li> {{user_p.avatar} }</li>
+{% endif%}
+
+ {%if user_p.description %}
+<li> {{ user_p.description} }</li>
+{% endif%}
+
+ {%if user_p.id == request.user.id %}
+<li> <a href="{% url 'name-update' request.user.id %}?next={{ request.path }}">Обновить логин </a>
+<li> <a href="{% url 'avatar-update' request.user.id %}?next={{ request.path }}">Обновить фотографию </a>
+<li> <a href="{% url 'info-update' request.user.id %}?next={{ request.path }}">Обновить описание </a>
+    <li> <a href="{% url 'post-create'  %}?next={{ request.path }}">Создать пост </a>
+{% endif%}
+
+    {% if post_list   %}
+        {% for post in post_list %}
+            <ul>
+                <a href="{% url 'post'  post.id%}" > Пост : {{ post.id }} </a>
+                <li> {{ post.text }}</li>
+                {%if post.pict%}
+                <li> {{ post.pict} }</li>
+                {% endif%}
+                <li> {{ post.user.get_username}}</li>
+            </ul>
+        {% endfor %}
+    {% else %}
+        <h1> Постов пока нет </h1>
+    {% endif%}
+{% endblock %}

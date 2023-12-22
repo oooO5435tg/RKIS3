@@ -1,0 +1,30 @@
+{% extends 'base.html'%}
+{% block content%}
+{%if post.pict%}
+<li> {{ post.pict} }</li>
+{% endif%}
+<li> {{ post.text }}</li>
+
+<li> {{ post.user.get_username}}</li>
+
+<li> <a href="{% url 'com-create'  post.id%}?next={{ request.path }}">Оставить комментарий </a>
+
+</li>
+{% if comments   %}
+        {% for comment in comments %}
+            <ul>
+                <li> {{comment.text }}</li>
+                {%if comment.pict%}
+                <li> {{ comment.pict} }</li>
+                {% endif%}
+                <li> {{ comment.user.get_username}}</li>
+                                 {%if  comment.user == request.user.id %}
+                    <li> <a href="{% url 'com-update' comment.id %}?next={{ request.path }}">Обновить логин </a>
+                    <li> <a href="{% url 'com-delete' comment.id %}?next={{ request.path }}">Обновить фотографию </a>
+                {% endif%}
+            </ul>
+        {% endfor %}
+    {% else %}
+        <h1> Комментариев  пока нет </h1>
+    {% endif%}
+{% endblock%}
